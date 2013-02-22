@@ -162,7 +162,7 @@ resetSubmitText["intl"] = "Reset filter";
 // Control HTML Start
 // ----------------------------------------------------------------
 // Complete HTML for all the controls is defined in this variable.
-var myFilterHtml = "<div id=cleaner style='position:absolute;'>"
+var myFilterHtml = "<div id=cleaner>"
 
 // Period
 + "<h3>"+period[lang]+" <a href='javascript:return;' id=periodHelp>?</a></h3>"
@@ -256,8 +256,8 @@ function setClicks(){
         // Number of currently shown hits before cleaning
         var before = parseInt( $("#searchResult").children("li[style!='display: none;']").length );
         
-		// Hide unchecked ones
-		// This indicates which ones are hidden
+        // Hide unchecked ones
+        // This indicates which ones are hidden
         if( !$('#Helfart:checked').val() ){
             hideStudieTakt(helfart[lang], "100");
             $('#Helfart').hide();
@@ -293,20 +293,20 @@ function setClicks(){
         $("#numberofhits").html("" + after);
     });
     
-	// Hide pace of study based on the word (ord) or number% (siffra)
-	// Loops the <li>s, checks if it's a number or word and if that number or word should be hidden
+    // Hide pace of study based on the word (ord) or number% (siffra)
+    // Loops the <li>s, checks if it's a number or word and if that number or word should be hidden
     function hideStudieTakt(ord, siffra){
         $('.coursebasics').each(function(){
             var studietakt = $(this).children("div.coursecolumn").eq(1).children("div.coursecolumncontent").eq(0).children("p:contains('"+studietaktSelector[lang]+"')").html();
             studietakt = studietakt.substr(studietakt.indexOf("</label>")+8);
             
-			// Check if it is in %, e.g a number
+            // Check if it is in %, e.g a number
             if(studietakt.indexOf("%") >= 0)
             {
-				// Take away the % and parse to a number
+                // Take away the % and parse to a number
                 studietakt = parseInt(studietakt.replace("%",""));
                 
-				// If it is in this %-class, e.g 50-74% for "Half-time", hide it
+                // If it is in this %-class, e.g 50-74% for "Half-time", hide it
                 if( (studietakt > siffra && studietakt < (siffra+25)) ){
                     $(this).parent().parent().parent().parent().hide();
                 }
@@ -327,7 +327,7 @@ function setClicks(){
         // Number of currently shown hits before cleaning
         var before = parseInt( $("#searchResult").children("li[style!='display: none;']").length );
         
-		// Hide the unckecked boxes to indicate what Levels are hidden
+        // Hide the unckecked boxes to indicate what Levels are hidden
         if( !$('#Forutbildning:checked').val() ){
             hideLevels(forutbildningSelector[lang]);
             $('#Forutbildning').hide();
@@ -355,7 +355,7 @@ function setClicks(){
         $("#numberofhits").html("" + after);
     });
     
-	// Finds the <li>s where Pace is "ord", and hides them.
+    // Finds the <li>s where Pace is "ord", and hides them.
     function hideLevels(ord){
         $('.coursebasics').each(function(){
             var level = $(this).children("div.coursecolumn").eq(0).children("div.coursecolumncontent").eq(0).children("p:contains('"+nivaSelector[lang]+"')").html();
@@ -369,6 +369,12 @@ function setClicks(){
     }
     //-----------------------------------------------------------------------------
     // Level End
+    
+    
+    // Make sure the Continue To Application-button works; the script must've messed with it...
+    $("#continuetoapplication").click(function(){
+        window.location="mypages/applications/merge";
+    });
 }
 
 
