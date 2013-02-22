@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       Antagning Filter
-// @version    1.0.0
+// @version    1.0.2
 // @author     Mogle
 // @namespace  https://github.com/MeeperMogle
 // @match      https://www.antagning.se/*/search?*
@@ -226,6 +226,9 @@ $("#myList").css("margin-top","-25px");
 
 setClicks();
 
+var defaultTotalNumberOfHits = $("#totalnumberofhits").html();
+
+
 // Function for setting all .click() functions of buttons, to make things work.
 // Needed its own function since the reset-function demands a re-definition of these .click()-functions.
 function setClicks(){
@@ -425,6 +428,11 @@ function resetPostFilter(){
     $("#myList").html(myListDefaultHtml + myFilterHtml);		// Reset the HTML of the Selected-box & filter-controllers...
     $('ul.selectedcourses').html(selectedCoursesHtml);			// ... and insert our selectedCoursesHtml again.
     setClicks();												// Reinstate the .click()-functions for our controllers
+    
+    // Reset the Result-counters
+    $("#totalnumberofhits").html( defaultTotalNumberOfHits );
+    $(".searchhitinfo").children('span').eq(0).html(defaultTotalNumberOfHits);
+    $("#numberofhits").html("" + $("#searchResult").children("li[style!='display: none;']").length);
 }
 //-----------------------------------------------------------------------------
 // Reset End
