@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       Antagning Filter
-// @version    1.0.2
+// @version    1.0.3
 // @author     Mogle
 // @namespace  https://github.com/MeeperMogle
 // @match      https://www.antagning.se/*/search?*
@@ -372,6 +372,15 @@ function setClicks(){
     }
     //-----------------------------------------------------------------------------
     // Level End
+    
+    
+    // Antagning updates the counter upon Show More-click, according to how many it THINKS are showing...
+    // We wait 1 second, then correct this.
+    $('#showmore').click(function(){
+        setTimeout(function() {
+            $('#numberofhits').html( $("#searchResult").children("li[style!='display: none;']").length );
+        }, 1000);
+    });
     
     
     // Make sure the Continue To Application-button works; the script must've messed with it...
