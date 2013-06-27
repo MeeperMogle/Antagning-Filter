@@ -25,9 +25,9 @@ var period = new Object();
 period["se"] = "Period";
 period["intl"] = "Period";
 
-// Dölj andra perioder
+// Dï¿½lj andra perioder
 var doljAndraPerioder = new Object();
-doljAndraPerioder["se"] = "Dölj andra Perioder";
+doljAndraPerioder["se"] = "Dï¿½lj andra Perioder";
 doljAndraPerioder["intl"] = "Hide other Periods";
 
 // Studietakt
@@ -40,29 +40,29 @@ var flexibel = new Object();
 flexibel["se"] = "Flexibel";
 flexibel["intl"] = "Flexible";
 
-// Dölj ej kryssade Studietakter
+// Dï¿½lj ej kryssade Studietakter
 var doljEjKryssadeStudietakter = new Object();
-doljEjKryssadeStudietakter["se"] = "Göm okryssade Studietakter";
+doljEjKryssadeStudietakter["se"] = "Gï¿½m okryssade Studietakter";
 doljEjKryssadeStudietakter["intl"] = "Hide unchecked Paces";
 
-// Nivåer
+// Nivï¿½er
 var nivaer = new Object();
-nivaer["se"] = "Nivåer";
+nivaer["se"] = "Nivï¿½er";
 nivaer["intl"] = "Levels";
 
-// Nivå
+// Nivï¿½
 var niva = new Object();
-nivaer["se"] = "Nivå";
+nivaer["se"] = "Nivï¿½";
 nivaer["intl"] = "Level";
 
-// Förutbildning
+// Fï¿½rutbildning
 var forutbildning = new Object();
-forutbildning["se"] = "Förutbildning";
+forutbildning["se"] = "Fï¿½rutbildning";
 forutbildning["intl"] = "Preparatory";
 
-// Grundnivå
+// Grundnivï¿½
 var grundniva = new Object();
-grundniva["se"] = "Grundnivå";
+grundniva["se"] = "Grundnivï¿½";
 grundniva["intl"] = "Bachelor";
 
 // Avancerad
@@ -70,9 +70,9 @@ var avancerad = new Object();
 avancerad["se"] = "Avancerad";
 avancerad["intl"] = "Master";
 
-// Dölj ej kryssade Nivåer
+// Dï¿½lj ej kryssade Nivï¿½er
 var doljEjKryssadeNivaer = new Object();
-doljEjKryssadeNivaer["se"] = "Dölj okryssade Nivåer";
+doljEjKryssadeNivaer["se"] = "Dï¿½lj okryssade Nivï¿½er";
 doljEjKryssadeNivaer["intl"] = "Hide unchecked Levels";
 
 // Helfart
@@ -100,19 +100,19 @@ var studietaktSelector = new Object();
 studietaktSelector["se"] = "Studietakt";
 studietaktSelector["intl"] = "Pace of study";
 
-// Nivå selector
+// Nivï¿½ selector
 var nivaSelector = new Object();
-nivaSelector["se"] = "Nivå";
+nivaSelector["se"] = "Nivï¿½";
 nivaSelector["intl"] = "Level:";
 
-// Förutbildning-selector
+// Fï¿½rutbildning-selector
 var forutbildningSelector = new Object();
-forutbildningSelector["se"] = "Förutbildning";
+forutbildningSelector["se"] = "Fï¿½rutbildning";
 forutbildningSelector["intl"] = "Prep./Access";
 
-// Grundnivå-selector
+// Grundnivï¿½-selector
 var grundnivaSelector = new Object();
-grundnivaSelector["se"] = "Grundnivå";
+grundnivaSelector["se"] = "Grundnivï¿½";
 grundnivaSelector["intl"] = "First Cycle";
 
 // Avancerad-selector
@@ -126,10 +126,10 @@ var studietaktHelp = new Object();
 var nivaerHelp = new Object();
 
 // Period
-periodHelp["se"] = "Under terminerna går kurser ofta i två perioder, 1 och 2.\n"
-+ "Välj den Period du är intresserad av att se kurser för och tryck på knappen.\n"
-+ "De som inte är i den perioden filtreras ut!\n"
-+ "\nTips: Tryck på Visa fler tills alla resultat visas, så att du bara behöver köra filtret 1 gång.";
+periodHelp["se"] = "Under terminerna gï¿½r kurser ofta i tvï¿½ perioder, 1 och 2.\n"
++ "Vï¿½lj den Period du ï¿½r intresserad av att se kurser fï¿½r och tryck pï¿½ knappen.\n"
++ "De som inte ï¿½r i den perioden filtreras ut!\n"
++ "\nTips: Tryck pï¿½ Visa fler tills alla resultat visas, sï¿½ att du bara behï¿½ver kï¿½ra filtret 1 gï¿½ng.";
 
 periodHelp["intl"] = "During semesters courses start in two periods, 1 and 2.\n"
 + "Choose the Period you're interested in seeing the courses for, press the button.\n"
@@ -137,22 +137,22 @@ periodHelp["intl"] = "During semesters courses start in two periods, 1 and 2.\n"
 + "\nTip: Click Show more until all results are shown, that way you only have to apply the filter 1 time.";
 
 // Studietakt (Pace)
-studietaktHelp["se"] = "Välj bort de studietakter du inte är intresserad av.\n"
-+ "\nNotera: För ovanliga studietakter, t.ex 37%, ligger de i det UNDRE alternativet.\n"
-+ "\nExempel:\n45% ligger mellan 25%=>50% - 45% är under kategorin 25%";
+studietaktHelp["se"] = "Vï¿½lj bort de studietakter du inte ï¿½r intresserad av.\n"
++ "\nNotera: Fï¿½r ovanliga studietakter, t.ex 37%, ligger de i det UNDRE alternativet.\n"
++ "\nExempel:\n45% ligger mellan 25%=>50% - 45% ï¿½r under kategorin 25%";
 
 studietaktHelp["intl"] = "Uncheck the paces you are not interested in.\n"
 + "\nNote: For unusual paces, suck as 37%, they are in the LOWER alternative.\n"
 + "\nExample:\n45% is between 25%=>50% - 45% is in the 25% category.";
 
-// Nivåer (Levels)
-nivaerHelp["se"] = "Välj bort de utbildningsnivåer du inte är intresserad av.";
+// Nivï¿½er (Levels)
+nivaerHelp["se"] = "Vï¿½lj bort de utbildningsnivï¿½er du inte ï¿½r intresserad av.";
 
 nivaerHelp["intl"] = "Uncheck the education levels you are not interested in.";
 
 // Reset
 var resetSubmitText = new Object();
-resetSubmitText["se"] = "Återställ filter";
+resetSubmitText["se"] = "ï¿½terstï¿½ll filter";
 resetSubmitText["intl"] = "Reset filter";
 
 // ----------------------------------------------------------------
@@ -193,7 +193,7 @@ var myFilterHtml = "<div id=cleaner>"
 
 + "<br>"
 
-// Nivåer (Levels)
+// Nivï¿½er (Levels)
 + "<h3>"+nivaer[lang]+" <a href='javascript:return;' id=nivaerHelp>?</a></h3>"
 + "<table border=0 cellpadding=10 cellspacing=0>"
 + "<tr><td width=33%><center>"+ forutbildning[lang]+"</td><td width=33%><center>"+ grundniva[lang]+"</td><td width=33%><center>"+ avancerad[lang]+"</td></tr>"
@@ -204,7 +204,7 @@ var myFilterHtml = "<div id=cleaner>"
 + "</tr>"
 + "<tr><td colspan=3><center><input type=submit id=rensanivaernu value='"+doljEjKryssadeNivaer[lang]+"'></tr>"
 + "</table>"
-// !Nivåer(Levels)
+// !Nivï¿½er(Levels)
 
 + "<hr><center><input type=checkbox id=resetCheckbox> <input type=submit id=resetSubmit value='"+resetSubmitText[lang]+"'>";
 
@@ -364,7 +364,7 @@ function setClicks(){
             var level = $(this).children("div.coursecolumn").eq(0).children("div.coursecolumncontent").eq(0).children("p:contains('"+nivaSelector[lang]+"')").html();
             level = level.substr(level.indexOf("</label>")+8);
             
-            if(level.indexOf(ord) >= 0)
+            if(level.toLowerCase().indexOf(ord.toLowerCase()) >= 0)
             {
                 $(this).parent().parent().parent().parent().hide();
             }
