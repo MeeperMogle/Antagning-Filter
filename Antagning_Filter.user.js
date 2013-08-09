@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name       Antagning Filter
-// @version    1.0.3
+// @version    1.0.4
 // @author     Mogle
 // @namespace  https://github.com/MeeperMogle
 // @match      https://www.antagning.se/*/search?*
@@ -25,9 +25,9 @@ var period = new Object();
 period["se"] = "Period";
 period["intl"] = "Period";
 
-// D�lj andra perioder
+// Dölj andra perioder
 var doljAndraPerioder = new Object();
-doljAndraPerioder["se"] = "D�lj andra Perioder";
+doljAndraPerioder["se"] = "Dölj andra Perioder";
 doljAndraPerioder["intl"] = "Hide other Periods";
 
 // Studietakt
@@ -40,29 +40,29 @@ var flexibel = new Object();
 flexibel["se"] = "Flexibel";
 flexibel["intl"] = "Flexible";
 
-// D�lj ej kryssade Studietakter
+// Dölj ej kryssade Studietakter
 var doljEjKryssadeStudietakter = new Object();
-doljEjKryssadeStudietakter["se"] = "G�m okryssade Studietakter";
+doljEjKryssadeStudietakter["se"] = "Göm okryssade Studietakter";
 doljEjKryssadeStudietakter["intl"] = "Hide unchecked Paces";
 
-// Niv�er
+// Nivåer
 var nivaer = new Object();
-nivaer["se"] = "Niv�er";
+nivaer["se"] = "Nivåer";
 nivaer["intl"] = "Levels";
 
-// Niv�
+// Nivå
 var niva = new Object();
-nivaer["se"] = "Niv�";
+nivaer["se"] = "Nivå";
 nivaer["intl"] = "Level";
 
-// F�rutbildning
+// Förutbildning
 var forutbildning = new Object();
-forutbildning["se"] = "F�rutbildning";
+forutbildning["se"] = "Förutbildning";
 forutbildning["intl"] = "Preparatory";
 
-// Grundniv�
+// Grundnivå
 var grundniva = new Object();
-grundniva["se"] = "Grundniv�";
+grundniva["se"] = "Grundnivå";
 grundniva["intl"] = "Bachelor";
 
 // Avancerad
@@ -70,9 +70,9 @@ var avancerad = new Object();
 avancerad["se"] = "Avancerad";
 avancerad["intl"] = "Master";
 
-// D�lj ej kryssade Niv�er
+// Dölj ej kryssade Nivåer
 var doljEjKryssadeNivaer = new Object();
-doljEjKryssadeNivaer["se"] = "D�lj okryssade Niv�er";
+doljEjKryssadeNivaer["se"] = "Dölj okryssade Nivåer";
 doljEjKryssadeNivaer["intl"] = "Hide unchecked Levels";
 
 // Helfart
@@ -100,19 +100,19 @@ var studietaktSelector = new Object();
 studietaktSelector["se"] = "Studietakt";
 studietaktSelector["intl"] = "Pace of study";
 
-// Niv� selector
+// Nivå selector
 var nivaSelector = new Object();
-nivaSelector["se"] = "Niv�";
+nivaSelector["se"] = "Nivå";
 nivaSelector["intl"] = "Level:";
 
-// F�rutbildning-selector
+// Förutbildning-selector
 var forutbildningSelector = new Object();
-forutbildningSelector["se"] = "F�rutbildning";
+forutbildningSelector["se"] = "Förutbildning";
 forutbildningSelector["intl"] = "Prep./Access";
 
-// Grundniv�-selector
+// Grundnivå-selector
 var grundnivaSelector = new Object();
-grundnivaSelector["se"] = "Grundniv�";
+grundnivaSelector["se"] = "Grundnivå";
 grundnivaSelector["intl"] = "First Cycle";
 
 // Avancerad-selector
@@ -126,10 +126,10 @@ var studietaktHelp = new Object();
 var nivaerHelp = new Object();
 
 // Period
-periodHelp["se"] = "Under terminerna g�r kurser ofta i tv� perioder, 1 och 2.\n"
-+ "V�lj den Period du �r intresserad av att se kurser f�r och tryck p� knappen.\n"
-+ "De som inte �r i den perioden filtreras ut!\n"
-+ "\nTips: Tryck p� Visa fler tills alla resultat visas, s� att du bara beh�ver k�ra filtret 1 g�ng.";
+periodHelp["se"] = "Under terminerna gör kurser ofta i två perioder, 1 och 2.\n"
++ "Välj den Period du är intresserad av att se kurser för och tryck på knappen.\n"
++ "De som inte är i den perioden filtreras ut!\n"
++ "\nTips: Tryck på Visa fler tills alla resultat visas, så att du bara behöver köra filtret 1 gång.";
 
 periodHelp["intl"] = "During semesters courses start in two periods, 1 and 2.\n"
 + "Choose the Period you're interested in seeing the courses for, press the button.\n"
@@ -137,22 +137,22 @@ periodHelp["intl"] = "During semesters courses start in two periods, 1 and 2.\n"
 + "\nTip: Click Show more until all results are shown, that way you only have to apply the filter 1 time.";
 
 // Studietakt (Pace)
-studietaktHelp["se"] = "V�lj bort de studietakter du inte �r intresserad av.\n"
-+ "\nNotera: F�r ovanliga studietakter, t.ex 37%, ligger de i det UNDRE alternativet.\n"
-+ "\nExempel:\n45% ligger mellan 25%=>50% - 45% �r under kategorin 25%";
+studietaktHelp["se"] = "Välj bort de studietakter du inte är intresserad av.\n"
++ "\nNotera: För ovanliga studietakter, t.ex 37%, ligger de i det UNDRE alternativet.\n"
++ "\nExempel:\n45% ligger mellan 25%=>50% - 45% är under kategorin 25%";
 
 studietaktHelp["intl"] = "Uncheck the paces you are not interested in.\n"
 + "\nNote: For unusual paces, suck as 37%, they are in the LOWER alternative.\n"
 + "\nExample:\n45% is between 25%=>50% - 45% is in the 25% category.";
 
-// Niv�er (Levels)
-nivaerHelp["se"] = "V�lj bort de utbildningsniv�er du inte �r intresserad av.";
+// Nivåer (Levels)
+nivaerHelp["se"] = "Välj bort de utbildningsnivåer du inte är intresserad av.";
 
 nivaerHelp["intl"] = "Uncheck the education levels you are not interested in.";
 
 // Reset
 var resetSubmitText = new Object();
-resetSubmitText["se"] = "�terst�ll filter";
+resetSubmitText["se"] = "Återställ filter";
 resetSubmitText["intl"] = "Reset filter";
 
 // ----------------------------------------------------------------
@@ -193,7 +193,7 @@ var myFilterHtml = "<div id=cleaner>"
 
 + "<br>"
 
-// Niv�er (Levels)
+// Nivåer (Levels)
 + "<h3>"+nivaer[lang]+" <a href='javascript:return;' id=nivaerHelp>?</a></h3>"
 + "<table border=0 cellpadding=10 cellspacing=0>"
 + "<tr><td width=33%><center>"+ forutbildning[lang]+"</td><td width=33%><center>"+ grundniva[lang]+"</td><td width=33%><center>"+ avancerad[lang]+"</td></tr>"
@@ -204,7 +204,7 @@ var myFilterHtml = "<div id=cleaner>"
 + "</tr>"
 + "<tr><td colspan=3><center><input type=submit id=rensanivaernu value='"+doljEjKryssadeNivaer[lang]+"'></tr>"
 + "</table>"
-// !Niv�er(Levels)
+// !Nivåer(Levels)
 
 + "<hr><center><input type=checkbox id=resetCheckbox> <input type=submit id=resetSubmit value='"+resetSubmitText[lang]+"'>";
 
@@ -384,9 +384,10 @@ function setClicks(){
     
     
     // Make sure the Continue To Application-button works; the script must've messed with it...
-    $("#continuetoapplication").click(function(){
-        window.location="mypages/applications/merge";
-    });
+    // NOTE: Deprecated!
+    //$("#continuetoapplication").click(function(){
+    //    top.location="mypages/applications/merge";
+    //});
 }
 
 
@@ -432,7 +433,7 @@ function rensaPeriod()
 // Reset Start
 //-----------------------------------------------------------------------------
 function resetPostFilter(){
-    $("li[style='display: none;']").show(); 					// Show all hidden courses
+    $("li[style='display: none;']").show();                   				// Show all hidden courses
     var selectedCoursesHtml = $('ul.selectedcourses').html();	// Get the HTML of the courses we have Selected
     $("#myList").html(myListDefaultHtml + myFilterHtml);		// Reset the HTML of the Selected-box & filter-controllers...
     $('ul.selectedcourses').html(selectedCoursesHtml);			// ... and insert our selectedCoursesHtml again.
@@ -445,3 +446,6 @@ function resetPostFilter(){
 }
 //-----------------------------------------------------------------------------
 // Reset End
+
+var tillAnmalanURL = 'https://www.antagning.se/se/mypages/applications/merge';
+$('#continuetoapplication').html( '<a href="' + tillAnmalanURL + '" style="color:white;">' + $('#continuetoapplication').html() + '</a>' );
