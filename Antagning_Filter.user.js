@@ -8,6 +8,7 @@
 // @include    https://www.antagning.se/*/search?*
 // @include    https://www.universityadmissions.se/*/search?*
 // @require    http://code.jquery.com/jquery-2.0.3.min.js
+// @grant      all
 // ==/UserScript==
 
 settings = localStorage.getItem('antagningLocalStored');
