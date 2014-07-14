@@ -1,14 +1,64 @@
 // ==UserScript==
 // @name       Antagning Filter
-// @version    1.0.4
+// @version    1.1
 // @author     Mogle
 // @namespace  https://github.com/MeeperMogle
 // @match      https://www.antagning.se/*/search?*
 // @match      https://www.universityadmissions.se/*/search?*
 // @include    https://www.antagning.se/*/search?*
 // @include    https://www.universityadmissions.se/*/search?*
-// @require    http://code.jquery.com/jquery-1.9.1.js
+// @require    http://code.jquery.com/jquery-2.0.3.min.js
 // ==/UserScript==
+
+settings = localStorage.getItem('antagningLocalStored');
+
+if(!settings){
+    settings = {
+        "notHave": ["Kingdom Rule I", "Kingdom Rule II"],
+        "notWant": ["Slacker Course", "Slackerer Course"]
+    };   
+    localStorage.setItem('antagningLocalStored', JSON.stringify(settings));
+}
+else{settings = JSON.parse(settings);}
+
+function obehorig(){
+    $('.coursedetails').each(function(){
+        var text = $(this).html();
+        
+        $(this).parent().parent().parent().children('.namearea').children('h3').css('color','black');
+        $(this).html($(this).html().replace(/(<font color="red">|<\/font>)/g,""));
+        
+        if(text.indexOf("kunskapskrav") > -1){
+            for(i=0; i<settings.notHave.length; i++){
+                if(settings.notHave[i] != "" && text.toLowerCase().indexOf(settings.notHave[i].toLowerCase()) > -1){
+                    $(this).parent().parent().parent().children('.namearea').children('h3').css('color','red');
+                    //alert(settings.notHave[i].toLowerCase());
+                    $(this).html($(this).html().replace(settings.notHave[i], "<font color=red>" + settings.notHave[i] + "</font>"));
+                }
+            }
+        }
+    });
+    $('.moreinfodialog').each(function(){
+        if($(this).html().indexOf("kunskapskrav") == -1){
+            $(this).parent().parent().children('.namearea').children('h3').css('color','blue');
+        }
+    });
+}
+obehorig();
+
+function ointressantFilterer(){
+    $('#searchResult li').show();
+    
+    $('.moreinfodialog').each(function(){
+        for(i=0; i<settings.notWant.length; i++){
+            if(settings.notWant[i] != "" && $(this).parent().parent().children('.namearea').children('h3').html().toLowerCase().indexOf(settings.notWant[i].toLowerCase()) > -1){
+                $(this).parent().parent().parent().hide();
+                break;
+            }
+        }
+    });
+}
+ointressantFilterer();
 
 // They added an annoying footer; let's turn that off shall we?
 $("#footer").hide();
@@ -55,6 +105,16 @@ var niva = new Object();
 nivaer["se"] = "Nivå";
 nivaer["intl"] = "Level";
 
+// Saknar
+var saknar = new Object();
+saknar["se"] = "Saknar";
+saknar["intl"] = "Missing";
+
+// Saknar
+var ointressant = new Object();
+ointressant["se"] = "Ointressant";
+ointressant["intl"] = "Uninteresting";
+
 // Förutbildning
 var forutbildning = new Object();
 forutbildning["se"] = "Förutbildning";
@@ -74,6 +134,18 @@ avancerad["intl"] = "Master";
 var doljEjKryssadeNivaer = new Object();
 doljEjKryssadeNivaer["se"] = "Dölj okryssade Nivåer";
 doljEjKryssadeNivaer["intl"] = "Hide unchecked Levels";
+
+// Filtrera saknade
+var filtreradeSaknade = new Object();
+filtreradeSaknade["se"] = "Filtrera saknade";
+filtreradeSaknade["intl"] = "Filter missing";
+
+// Filtrera saknade
+var filtreradeOintressanta = new Object();
+filtreradeOintressanta["se"] = "Filtrera ointressanta";
+filtreradeOintressanta["intl"] = "Filter uninteresting";
+
+
 
 // Helfart
 var helfart = new Object();
@@ -124,6 +196,8 @@ avanceradSelector["intl"] = "Second Cycle";
 var periodHelp = new Object();
 var studietaktHelp = new Object();
 var nivaerHelp = new Object();
+var saknarHelp = new Object();
+var ointressantHelp = new Object();
 
 // Period
 periodHelp["se"] = "Under terminerna gör kurser ofta i två perioder, 1 och 2.\n"
@@ -150,6 +224,21 @@ nivaerHelp["se"] = "Välj bort de utbildningsnivåer du inte är intresserad av.
 
 nivaerHelp["intl"] = "Uncheck the education levels you are not interested in.";
 
+// Saknar (Missing)
+saknarHelp["se"] = "Ange nyckelord på Förkunskaper du inte har, t.ex Tyska steg 3.\nEn per rad. Dessa rödmarkeras."
++ "\n\nNotera: Blåmarkerad saknar Förkunskaper-sektion.";
+
+saknarHelp["intl"] = "Enter keywords of Prerequisites you do not have, like Spanish\nOne per line. They'll turn red."
++ "\n\nNote: Blue means it lacks Prerequisites-section.";
+
+// Ointressant (Uninteresting)
+ointressantHelp["se"] = "Ange nyckelord på Namn på utbildningar du inte är intresserad av. En per rad."
++ "\nDessa kommer att döljas från resultatet.";
+
+ointressantHelp["intl"] = "Enter keywords of Names of educations you are not interested in. One per line."
++ "\nThese will be hidden in the results.";
+
+
 // Reset
 var resetSubmitText = new Object();
 resetSubmitText["se"] = "Återställ filter";
@@ -159,14 +248,40 @@ resetSubmitText["intl"] = "Reset filter";
 // Language Stuff End
 
 
+
+
+
+var listOfMissing = "";
+var listOfUnwanted = "";
+
+var usedNotHaveArray = settings.notHave.sort();
+for(var i=0; i<usedNotHaveArray.length; i++) {
+    listOfMissing += usedNotHaveArray[i];
+    
+    if( (i+1) < (usedNotHaveArray.length ) )
+        listOfMissing += "\n";
+}
+
+var usedNotWantArray = settings.notWant.sort();
+for(var i=0; i<usedNotWantArray.length; i++) {
+    listOfUnwanted += usedNotWantArray[i];
+    
+    if( (i+1) < (usedNotWantArray.length ) )
+        listOfUnwanted += "\n";
+}
+
+
+
+
 // Control HTML Start
 // ----------------------------------------------------------------
+
 // Complete HTML for all the controls is defined in this variable.
-var myFilterHtml = "<div id=cleaner>"
+var myFilterHtml = "<div id=cleaner><style>#mylist h3{font-size:15px; font-weight:bold; color:blue; text-decoration:underline;}</style>"
 
 // Period
-+ "<h3>"+period[lang]+" <a href='javascript:return;' id=periodHelp>?</a></h3>"
-+ "<table border=0 cellpadding=10 cellspacing=0>"
++ "<h3><a href=#myList id=periodToggle>"+period[lang]+"</a> <a href='javascript:return;' id=periodHelp>?</a></h3>"
++ "<table border=0 cellpadding=10 cellspacing=0 id=periodTable>"
 + "<tr><td><center>"+period[lang]+" </td>"
 + "<td><center><select id=period><option value=1>1</option><option value=2 selected>2</option></select></td>"
 + "</tr>"
@@ -177,8 +292,8 @@ var myFilterHtml = "<div id=cleaner>"
 + "<br>"
 
 // Studietakt (Pace)
-+ "<h3>"+studietakt[lang]+" <a href='javascript:return;' id=studietaktHelp>?</a></h3>"
-+ "<table border=0 cellpadding=10 cellspacing=0>"
++ "<h3><a href='javascript:return;' id=studietaktToggle>"+studietakt[lang]+"</a> <a href='javascript:return;' id=studietaktHelp>?</a></h3>"
++ "<table border=0 cellpadding=10 cellspacing=0 id=studietaktTable>"
 + "<tr><td width=20%><center>100%</td><td width=20%><center>75%</td><td width=20%><center>50%</td><td width=20%><center>25%</td><td width=20%><center>"+ flexibel[lang]+"</td></tr>"
 + "<tr>"
 + "<td><center><input type=checkbox value=Helfart id=Helfart checked></td>"
@@ -194,8 +309,8 @@ var myFilterHtml = "<div id=cleaner>"
 + "<br>"
 
 // Nivåer (Levels)
-+ "<h3>"+nivaer[lang]+" <a href='javascript:return;' id=nivaerHelp>?</a></h3>"
-+ "<table border=0 cellpadding=10 cellspacing=0>"
++ "<h3><a href='javascript:return;' id=nivaerToggle>"+nivaer[lang]+"</a> <a href='javascript:return;' id=nivaerHelp>?</a></h3>"
++ "<table border=0 cellpadding=10 cellspacing=0 id=nivaerTable>"
 + "<tr><td width=33%><center>"+ forutbildning[lang]+"</td><td width=33%><center>"+ grundniva[lang]+"</td><td width=33%><center>"+ avancerad[lang]+"</td></tr>"
 + "<tr>"
 + "<td><center><input type=checkbox value=Forutbildning id=Forutbildning checked></td>"
@@ -206,9 +321,33 @@ var myFilterHtml = "<div id=cleaner>"
 + "</table>"
 // !Nivåer(Levels)
 
-+ "<hr><center><input type=checkbox id=resetCheckbox> <input type=submit id=resetSubmit value='"+resetSubmitText[lang]+"'>";
++ "<br>"
+
+// Saknar (Missing)
++ "<h3><a href='javascript:return;' id=saknarToggle>"+saknar[lang]+"</a> <a href='javascript:return;' id=saknarHelp>?</a></h3>"
++ "<table border=0 cellpadding=10 cellspacing=0 id=saknarTable>"
++ "<tr><td><textarea cols=25 rows=5 id=Saknar>" + listOfMissing + "</textarea></td></tr>"
++ "<tr><td colspan=3><input type=submit id=filtreraSaknadeNu value='"+filtreradeSaknade[lang]+"'></tr>"
++ "</table>"
+// !Saknar(Missing)
+
++ "<br>"
+
+// Ointressant (Uninteresting)
++ "<h3><a href='javascript:return;' id=ointressantToggle>"+ointressant[lang]+"</a> <a href='javascript:return;' id=ointressantHelp>?</a></h3>"
++ "<table border=0 cellpadding=10 cellspacing=0 id=ointressantTable>"
++ "<tr><td><textarea cols=25 rows=5 id=Ointressant>" + listOfUnwanted + "</textarea></td></tr>"
++ "<tr><td colspan=3><input type=submit id=filtreraOintressantaNu value='"+filtreradeOintressanta[lang]+"'></tr>"
++ "</table>"
+// !Ointressant(Uninteresting)
+
++ "<hr><center><input type=checkbox id=resetCheckbox> <input type=submit id=resetSubmit value='"+resetSubmitText[lang]+"'>"
+
+//+ "<p><input type=submit id=openAll value='Utöka kurser'>"
 
 + "</div>";
+
+
 // ----------------------------------------------------------------
 // Controls HTML End
 
@@ -221,10 +360,24 @@ $("#myList").html( $("#myList").html()
                   + myFilterHtml
                  );
 
+$('#nivaerTable,#studietaktTable,#periodTable,#saknarTable,#ointressantTable').hide();
+
+function toggleTable(name){
+    var table = $('#' + name + 'Table');
+    
+    if(table.css('display') == 'none')
+        table.show();
+    else
+        table.hide();
+}
+
+var counter = 0;
+
+
 // Move it up a bit to fit everything better
 $("#myList").css("margin-top","-25px");
 
-setClicks();
+
 
 var defaultTotalNumberOfHits = $("#totalnumberofhits").html();
 
@@ -232,14 +385,46 @@ var defaultTotalNumberOfHits = $("#totalnumberofhits").html();
 // Function for setting all .click() functions of buttons, to make things work.
 // Needed its own function since the reset-function demands a re-definition of these .click()-functions.
 function setClicks(){
+    $('#nivaerToggle').click(function(){toggleTable("nivaer")});
+    $('#studietaktToggle').click(function(){toggleTable("studietakt")});
+    $('#periodToggle').click(function(){toggleTable("period")});
+    $('#saknarToggle').click(function(){toggleTable("saknar")});
+    $('#ointressantToggle').click(function(){toggleTable("ointressant")});
+    
     $('#periodHelp').click( function(){alert(periodHelp[lang])} );
     $('#studietaktHelp').click( function(){alert(studietaktHelp[lang])} );
     $('#nivaerHelp').click( function(){alert(nivaerHelp[lang])} );
+    $('#saknarHelp').click( function(){alert(saknarHelp[lang])} );
+    $('#ointressantHelp').click( function(){alert(ointressantHelp[lang])} );
+    
+    $('#openAll').click(function(){
+        $('.openmoreinfolink').eq(0).each(function(){
+            if(counter % 2 == 0)
+                $('.closemoreinfolink').click();
+            else
+                $('.openmoreinfolink').click();
+            
+            counter++;
+        });
+        
+    });
     
     $('#resetSubmit').click(function(){
         if($('#resetCheckbox:checked').val()){
             resetPostFilter();
         }
+    });
+    
+    $('#filtreraSaknadeNu').click(function(){
+        settings.notHave = $('#Saknar').val().split("\n");
+        localStorage.setItem('antagningLocalStored', JSON.stringify(settings));
+        obehorig();
+    });
+    
+    $('#filtreraOintressantaNu').click(function(){
+        settings.notWant = $('#Ointressant').val().split("\n");
+        localStorage.setItem('antagningLocalStored', JSON.stringify(settings));
+        ointressantFilterer();
     });
     
     
@@ -318,7 +503,7 @@ function setClicks(){
             {
                 $(this).parent().parent().parent().parent().hide();
             }
-        });
+                });
     }
     //-----------------------------------------------------------------------------
     // Pace End
@@ -406,10 +591,10 @@ function rensaPeriod()
         $('li:contains("Period 2")').hide();
     else if( $("#period").val() == "2" )
         $('li:contains("Period 1")').hide();
-    
-    // Disable the selector and go-button;
-    // no need to press them when the cleaning is done.
-    document.getElementById('rensaperiodnu').disabled = 'disabled';
+        
+        // Disable the selector and go-button;
+        // no need to press them when the cleaning is done.
+        document.getElementById('rensaperiodnu').disabled = 'disabled';
     document.getElementById('period').disabled = 'disabled';
     
     // Count the remaining courses shown in the list,
@@ -433,7 +618,7 @@ function rensaPeriod()
 // Reset Start
 //-----------------------------------------------------------------------------
 function resetPostFilter(){
-    $("li[style='display: none;']").show();                   				// Show all hidden courses
+    $("li[style='display: none;']").show(); 					// Show all hidden courses
     var selectedCoursesHtml = $('ul.selectedcourses').html();	// Get the HTML of the courses we have Selected
     $("#myList").html(myListDefaultHtml + myFilterHtml);		// Reset the HTML of the Selected-box & filter-controllers...
     $('ul.selectedcourses').html(selectedCoursesHtml);			// ... and insert our selectedCoursesHtml again.
@@ -449,3 +634,52 @@ function resetPostFilter(){
 
 var tillAnmalanURL = 'https://www.antagning.se/se/mypages/applications/merge';
 $('#continuetoapplication').html( '<a href="' + tillAnmalanURL + '" style="color:white;">' + $('#continuetoapplication').html() + '</a>' );
+
+$('#showmore').parent().append('<a id="showall" class="showmore" rel="nofollow" href=""><span>Visa alla</span></a>');
+
+
+var active = true;
+
+$('#showall').click(function(){
+    active = false;
+    if( $('#showmore').not(':hidden') ){
+        setInterval( function(){ 
+            if( $('#showmore').is(':hidden') && $('#showall').css("display") != "none" ){
+                $('#showall').hide();
+                obehorig();
+                ointressantFilterer();
+                active = true;
+            }
+            else if($('#showall').css("display") != "none"){
+                document.getElementById('showmore').click();
+            }
+                }, 1500 );
+    }
+    return false;
+});
+
+$('#showmore').click(function(){
+    if(active){
+        setTimeout(obehorig,2000);
+        setTimeout(ointressant,2000);
+    }
+});
+
+
+setClicks();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
